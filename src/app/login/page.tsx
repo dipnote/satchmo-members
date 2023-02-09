@@ -1,26 +1,31 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { FormEvent, useState } from "react"
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 const Login = () => {
-  const [password, setPassword] = useState("")
-  const [success, setSuccess] = useState(true)
+  const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(true);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const signIn = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const response = await (
-      await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        body: JSON.stringify({ password }),
-      })
-    ).json()
+      await fetch(
+        (process.env.NODE_ENV == "production"
+          ? "https://satchmo-members.vercel.app"
+          : "http://localhost:3000") + "/api/login",
+        {
+          method: "POST",
+          body: JSON.stringify({ password }),
+        }
+      )
+    ).json();
 
-    response.success ? router.push("/") : setSuccess(false)
-  }
+    response.success ? router.push("/") : setSuccess(false);
+  };
 
   return (
     <>
@@ -36,6 +41,6 @@ const Login = () => {
         <button>Sign In</button>
       </form>
     </>
-  )
-}
-export default Login
+  );
+};
+export default Login;
