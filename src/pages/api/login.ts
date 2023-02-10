@@ -9,7 +9,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
       "Set-Cookie",
       `log=${createHash("sha256")
         .update(process.env.PASSWORD!)
-        .digest("hex")}; Max-Age=${60 * 60 * 8}; Path=/; Secure`
+        .digest("hex")}; Max-Age=${60 * 60 * 2}; Path=/; Secure`
     )
     res.json({ success: true })
   } else {
